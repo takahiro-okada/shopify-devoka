@@ -1,0 +1,16 @@
+.tagfilter__list {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+.tagfilter__link {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+.tagfilter__link.is-active {
+  background-color: #333;
+  color: #fff;
+  border-radius: 20px;
+}
