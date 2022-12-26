@@ -1,6 +1,8 @@
 {{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+{{ 'blog-tag-filter.css' | asset_url | stylesheet_tag }}
+
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -20,6 +22,19 @@
   <div class="main-blog page-width section-{{ section.id }}-padding">
     <h1 class="title--primary">{{ blog.title | escape }}</h1>
 
+    {% comment %} filter機能 {% endcomment %}
+    <ul class="tagfilter__list">
+      <li class="tagfilter__item">
+        <a href="/blogs/{{ blog.handle }}" class="tagfilter__link {% if current_tags == blank %}is-active{% endif %}">全て</a>
+      </li>
+  
+      {%- for tag in blog.all_tags -%}
+        <li class="tagfilter__item">
+          <a href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}" class="tagfilter__link {% if current_tags contains tag %}is-active{% endif %}">{{ tag }}</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
     <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
       {%- for article in blog.articles -%}
         <div class="blog-articles__article article">
@@ -30,7 +45,7 @@
             show_image: section.settings.show_image,
             show_date: section.settings.show_date,
             show_author: section.settings.show_author,
-            show_excerpt: true 
+            show_excerpt: false
           -%}
         </div>
       {%- endfor -%}
